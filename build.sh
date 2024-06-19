@@ -14,6 +14,9 @@ if ! command -v conda &>/dev/null; then
 fi
 
 DIR="libcint"
+export FC=ifort
+export CC=icc
+export CXX=icpc
 
 if [[ "$(basename "$(pwd)")" == "$DIR" ]]; then
     BUILD_DIR="$PWD/_build"

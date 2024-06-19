@@ -5,6 +5,7 @@
 
 (gen-cint "intor1.c"
   ;'("int1e_ovlp"                ( \| ))
+  ;'("int1e_ovlpa"                ( \, ))
   ;'("int1e_nuc"                 ( \| nuc \| ))
   '("int1e_kin"                 (.5 \| p dot p))
   '("int1e_ia01p"               (#C(0 1) \| nabla-rinv \| cross p))
@@ -213,7 +214,7 @@
 )
 
 (gen-cint "int3c1e.c"
-  '("int3c1e_ovlp"              ( \, \| ))
+  '("int3c1e_ovlp"              ( \, \, ))
   '("int3c1e_p2"                ( \, \, p dot p))
   '("int3c1e_iprinv"            ( p \, \| rinv \| ))
   '("int3c1e_ip1"               ( nabla \, \,))

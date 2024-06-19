@@ -14,6 +14,53 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+static void CINTgout1e_int3c1e_ovlp(double *gout,
+double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty) {
+FINT nf = envs->nf;
+FINT ix, iy, iz, n;
+double *g0 = g;
+double s[1];
+for (n = 0; n < nf; n++) {
+ix = idx[0+n*3];
+iy = idx[1+n*3];
+iz = idx[2+n*3];
+s[0] = + g0[ix+0]*g0[iy+0]*g0[iz+0];
+if (gout_empty) {
+gout[n*1+0] = + s[0];
+} else {
+gout[n*1+0] += + s[0];
+}}}
+void int3c1e_ovlp_optimizer(CINTOpt **opt, FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env) {
+FINT ng[] = {0, 0, 0, 0, 0, 1, 1, 1};
+CINTall_3c1e_optimizer(opt, ng, atm, natm, bas, nbas, env);
+}
+CACHE_SIZE_T int3c1e_ovlp_cart(double *out, FINT *dims, FINT *shls,
+FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
+FINT ng[] = {0, 0, 0, 0, 0, 1, 1, 1};
+CINTEnvVars envs;
+CINTinit_int3c1e_EnvVars(&envs, ng, shls, atm, natm, bas, nbas, env);
+envs.f_gout = &CINTgout1e_int3c1e_ovlp;
+return CINT3c1e_drv(out, dims, &envs, opt, cache, &c2s_cart_3c1e, 0, 0);
+}
+// int3c1e_ovlp_cart
+CACHE_SIZE_T int3c1e_ovlp_sph(double *out, FINT *dims, FINT *shls,
+FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
+FINT ng[] = {0, 0, 0, 0, 0, 1, 1, 1};
+CINTEnvVars envs;
+CINTinit_int3c1e_EnvVars(&envs, ng, shls, atm, natm, bas, nbas, env);
+envs.f_gout = &CINTgout1e_int3c1e_ovlp;
+return CINT3c1e_drv(out, dims, &envs, opt, cache, &c2s_sph_3c1e, 0, 0);
+} // int3c1e_ovlp_sph
+CACHE_SIZE_T int3c1e_ovlp_spinor(double complex *out, FINT *dims, FINT *shls,
+FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
+FINT ng[] = {0, 0, 0, 0, 0, 1, 1, 1};
+CINTEnvVars envs;
+CINTinit_int3c1e_EnvVars(&envs, ng, shls, atm, natm, bas, nbas, env);
+envs.f_gout = &CINTgout1e_int3c1e_ovlp;
+return CINT3c1e_spinor_drv(out, dims, &envs, opt, cache, &c2s_sf_3c2e1, 0, 0);
+} // int3c1e_ovlp_spinor
+ALL_CINT(int3c1e_ovlp)
+ALL_CINT_FORTRAN_(int3c1e_ovlp)
 static void CINTgout1e_int3c1e_p2(double *gout,
 double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty) {
 FINT nf = envs->nf;

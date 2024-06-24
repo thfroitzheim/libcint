@@ -30,6 +30,7 @@ if [[ "$(basename "$(pwd)")" == "$DIR" ]]; then
         -DBUILD_SHARED_LIBS=0 \
         -DWITH_F12=OFF \
         -DWITH_CINT2_INTERFACE=OFF \
+        -DMIN_EXPCUTOFF=10\
         ..
         #-DPXPYPZ=ON \
         #-DD

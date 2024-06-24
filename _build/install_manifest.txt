@@ -1,0 +1,3 @@
+/home/froitzheim/bin/libcint/lib/libcint.a
+/home/froitzheim/bin/libcint/include/cint_funcs.h
+/home/froitzheim/bin/libcint/include/cint.h
